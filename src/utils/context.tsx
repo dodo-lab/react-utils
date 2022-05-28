@@ -11,16 +11,16 @@ export function createUseContextAndProvider<T>() {
   return [useCtx, context.Provider] as const;
 }
 
-export function createUseContextAndComponent<T>(initialValue: T) {
+export function createUseContextAndStateProvider<T>(initialValue: T) {
   type UpdateType = Dispatch<SetStateAction<T>>;
   const initialUpdate: UpdateType = () => initialValue;
   const context = createContext({state: initialValue, update: initialUpdate});
   const useCtx = () => useContext(context);
 
-  function Component(props: React.PropsWithChildren<{}>) {
+  const Provider: React.FC<{children: React.ReactNode}> = ({children}) => {
     const [state, update] = useState(initialValue);
-    return <context.Provider value={{state, update}} {...props} />;
-  }
+    return <context.Provider value={{state, update}}>{children}</context.Provider>;
+  };
 
-  return [useCtx, Component];
+  return [useCtx, Provider] as const;
 }
