@@ -21,6 +21,7 @@ const theme = createTheme({
 const linkItems: LinkItem[] = [
   {name: 'Top', link: '/'},
   {name: 'Context', link: '/context'},
+  {name: 'Local Storage', link: '/local-storage'},
 ];
 
 function MyApp({Component, pageProps}: AppProps) {
